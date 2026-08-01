@@ -70,7 +70,7 @@ bool writeInventoryReport(string filename, const InventoryItem items[], int coun
     }
 
     double total = calculateTotalInventoryValue(items, count);
-    outFile << "Total " << total << "\n";
+    outFile << "Total inventory value: " << total << "\n";
 
     outFile.close();
     return true;
@@ -90,10 +90,14 @@ double calculateTotalInventoryValue(const InventoryItem items[], int count) {
     return total;
 }
 
-int findItemBySku(const InventoryItem items[], int count, string sku) {
+int findItemBySku(const InventoryItem items[], int count, std::string sku) {
     // Search for a matching SKU.
     // Return the index if found.
     // Return -1 if not found.
+    if (items == nullptr || count <= 0) {
+        return -1;
+    }
+
     for(int i = 0; i < count; i++) {
         if(items[i].sku == sku) {
             return i;
