@@ -25,16 +25,14 @@ double calculateItemValue(const InventoryItem& item) {
 }
 
 int readInventoryFile(string filename, InventoryItem items[], int maxItems) {
-    // Open the input file.
     // Read records in this format: sku name quantity price
     // Store valid records in the items array.
     // Stop when the file ends or maxItems is reached.
-    // Return the number of records stored.
+    // Return the number of records stored. pxpham: deleted unnecessary comment and deleted unncessary spaces.
     ifstream inFile(filename);
     if(!inFile.is_open()) {
         return 0;
     }
-
     int count = 0;
     InventoryItem temp;
     while(count < maxItems && (inFile >> temp.sku >> temp.name >> temp.quantity >> temp.price)) {
@@ -43,23 +41,18 @@ int readInventoryFile(string filename, InventoryItem items[], int maxItems) {
             count++;
         }
     }
-
     inFile.close();
     return count;
 }
 
 bool writeInventoryReport(string filename, const InventoryItem items[], int count) {
-    // Open the output file.
-    // Write each item and its total value.
-    // Write the total inventory value.
-    // Return true if the report was written successfully.
+    // Write in output file: each item and its total value, total inventory value.
+    // Return true if the report was written successfully. pxpham: rewrote comments for efficient spacings and shortening.
     ofstream outFile(filename);
     if(!outFile.is_open()) {
         return false;
-    }
-
+    } //pxpham: deleted unnecessary spacing.
     outFile << fixed << setprecision(2);
-    
     for(int i = 0; i < count; i++) {
         double value = calculateItemValue(items[i]);
         outFile << items[i].sku << " "
@@ -68,21 +61,18 @@ bool writeInventoryReport(string filename, const InventoryItem items[], int coun
                 << items[i].price << " "
                 << value << "\n";
     }
-
     double total = calculateTotalInventoryValue(items, count);
     outFile << "Total inventory value: " << total << "\n";
-
     outFile.close();
     return true;
 }
 
 double calculateTotalInventoryValue(const InventoryItem items[], int count) {
     // Return the sum of all item values.
-    // Return 0.0 for null arrays or invalid counts.
+    // Return 0.0 for null arrays or invalid counts. pxpham: deleted unncessary spacing.
     if(items == nullptr || count <= 0) {
         return 0.0;
     }
-
     double total = 0.0;
     for(int i = 0; i < count; i++) {
         total += calculateItemValue(items[i]);
@@ -92,12 +82,10 @@ double calculateTotalInventoryValue(const InventoryItem items[], int count) {
 
 int findItemBySku(const InventoryItem items[], int count, std::string sku) {
     // Search for a matching SKU.
-    // Return the index if found.
-    // Return -1 if not found.
+    // Return the index if found. Return -1 if not found. pxpham: combined comments for effcient spacing. Deleted unnecessary spacing.
     if (items == nullptr || count <= 0) {
         return -1;
     }
-
     for(int i = 0; i < count; i++) {
         if(items[i].sku == sku) {
             return i;
